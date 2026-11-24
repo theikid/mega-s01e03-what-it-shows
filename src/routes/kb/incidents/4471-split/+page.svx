@@ -1,0 +1,71 @@
+---
+layout: runbook
+title: '#4471 · one ticket, three problems'
+owner: theikid
+status: proposed
+reviewed: 2026-11-24
+signature: 'v1.eyJzdWIiOiIzNDcyIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTU1MzU2MDAsImV4cCI6MTc5NTYyMjAwMH0.pcVwKO1yck4iV4OUrSExNdA-Kd-a21-c2PpkSiHdARw'
+---
+
+<script>
+  import ProblemTable from '#lib/kb/ProblemTable.svelte';
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+
+  const repo = 'https://github.com/theikid/mega-s01e03-what-it-shows/issues';
+  const tickets = { parser: `${repo}/1`, hint: `${repo}/2`, 'one-day-move': `${repo}/3` };
+</script>
+
+[#4471](/kb/incidents/4471) is marked known: one issue, one fix queued. The reports merged into it
+do not describe one issue. They describe three, and the queued fix reaches only the first.
+
+<Callout kind="warn">
+Not one issue. The parser fix leaves two problems open, and neither had a ticket.
+</Callout>
+
+## The problems
+
+<ProblemTable ticket={4471} {tickets} />
+
+- **`parser`**: the shared parser reads every date month first. A tenant that writes the day
+  first gets the day and the month swapped. Reports from the app, from email, and from the
+  `booking-v2` form. This is what #4471 says it is.
+- **`hint`**: the `booking-v3` form prints `MM/DD/YYYY` under its date field. People type the
+  month first, as told, and the form reads the day first. The result looks the same, a swapped
+  date, but the bug is in the form's hint, not in the parser. Fixing the parser does not fix it.
+- **`one-day-move`**: the date moves by one day, not by a month. One tenant sees it only in one
+  month; one sees two clients in two time zones get two different days for the same meeting.
+  Nothing is swapped. The desk's own notes list these reports, and they stayed filed under
+  `parser` because of the tenant they came from.
+
+## How each report was placed
+
+1. Take every report merged into #4471, once per id.
+2. A report listed in the desk notes as a one-day move is `one-day-move`.
+3. Any other report follows `causes.ts`: `hint` when it came through the form of a day-first
+   tenant on `booking-v3`, `parser` otherwise.
+
+The intake tag is not used. It is a guess from the reporter's browser, and the table above counts
+how often it differs from the problem.
+
+## What the kb showed before
+
+The incident page's own table already splits the ticket by cause, and footnotes the one-day moves:
+
+<CauseTable ticket={4471} />
+
+## Why it was merged
+
+[Decision 0001](/kb/decisions/0001-dedupe-by-subject) merges on the subject line alone. The same
+subject line appears on reports with different problems, so a rule that never reads the body
+cannot keep them apart. The page was written from the merge, and nobody looked at what it showed.
+
+## What to do
+
+- Keep #4471 for `parser`, with its real count.
+- Work the two new tickets on their own: the form team for `hint`, whoever owns time zones for
+  `one-day-move`.
+- Read the rendered page before marking a ticket known.
+
+<RenderStamp {signature} />
