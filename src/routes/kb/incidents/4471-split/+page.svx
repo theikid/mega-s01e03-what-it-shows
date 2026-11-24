@@ -39,15 +39,17 @@ Not one issue. The parser fix leaves two problems open, and neither had a ticket
   Nothing is swapped. The desk's own notes list these reports, and they stayed filed under
   `parser` because of the tenant they came from.
 
-## How each report was placed
+## How each report was counted
 
 1. Take every report merged into #4471, once per id.
-2. A report listed in the desk notes as a one-day move is `one-day-move`.
-3. Any other report follows `causes.ts`: `hint` when it came through the form of a day-first
-   tenant on `booking-v3`, `parser` otherwise.
+2. Count it under its cause, as `causes.ts` gives it: `hint` when it came through the form of a
+   day-first tenant on `booking-v3`, `parser` otherwise. This is the desk's own view.
+3. The reports the desk notes list as a one-day move get a ticket of their own. They stay in the
+   count of the cause they are filed under, as in the desk's view, and are counted again on their
+   own row.
 
 The intake tag is not used. It is a guess from the reporter's browser, and the table above counts
-how often it differs from the problem.
+how often it differs from the cause.
 
 ## What the kb showed before
 
@@ -63,7 +65,7 @@ cannot keep them apart. The page was written from the merge, and nobody looked a
 
 ## What to do
 
-- Keep #4471 for `parser`, with its real count.
+- Keep #4471 for `parser`.
 - Work the two new tickets on their own: the form team for `hint`, whoever owns time zones for
   `one-day-move`.
 - Read the rendered page before marking a ticket known.

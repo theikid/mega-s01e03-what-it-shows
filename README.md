@@ -40,7 +40,7 @@ Exported 2026-10-04 from the `support` repo, `apps/kb/` → `src/`.
 A student's copy of the export, for the MEGA.dev Challenge S01E03. Added to it:
 
 - `src/routes/kb/incidents/4471-split/+page.svx`: the page that splits #4471 into its problems.
-- `src/lib/kb/problems.ts`, `src/lib/kb/ProblemTable.svelte`: the logic and the table that page runs.
+- `src/lib/kb/ProblemTable.svelte`: the table that page runs, on the desk's own logic (`causes.ts`).
 - `rendered/kb/incidents/4471-split.html`: that page as the desk sees it.
 - `package.json`, `svelte.config.js`, `vite.config.js`, `src/app.html`, `src/routes/+layout.js`: what the export needs to render. `npm install && npm run build` writes `rendered/`.
 
