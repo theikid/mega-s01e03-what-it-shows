@@ -18,10 +18,10 @@ signature: 'v1.eyJzdWIiOiIzNDcyIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpY
 </script>
 
 [#4471](/kb/incidents/4471) is marked known: one issue, one fix queued. The reports merged into it
-do not describe one issue. They describe three, and the queued fix reaches only the first.
+do not describe one issue. They describe three, and the fix reached only the first.
 
 <Callout kind="warn">
-Not one issue. The parser fix leaves two problems open, and neither had a ticket.
+Not one issue. The parser fix closes one problem of three, and the other two had no ticket.
 </Callout>
 
 ## The problems
@@ -63,11 +63,15 @@ The incident page's own table already splits the ticket by cause, and footnotes 
 subject line appears on reports with different problems, so a rule that never reads the body
 cannot keep them apart. The page was written from the merge, and nobody looked at what it showed.
 
-## What to do
+## Where each problem stands
 
-- Keep #4471 for `parser`.
-- Work the two new tickets on their own: the form team for `hint`, whoever owns time zones for
-  `one-day-move`.
-- Read the rendered page before marking a ticket known.
+Engineering closed #4471 on 5 October. Its update names two of the three problems:
+
+- **`parser`**: fixed, with `fix(dates): parse dd/mm for eu locales`. Ticket closed as done.
+- **`hint`**: won't fix, because the `booking-v3` form is retired. Ticket closed as not planned.
+- **`one-day-move`**: not in the update. A fix that parses the day first does not move a date by
+  one day, so this ticket stays open.
+
+Read the rendered page before marking a ticket known.
 
 <RenderStamp {signature} />
